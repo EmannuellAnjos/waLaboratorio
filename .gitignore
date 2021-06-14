@@ -1,0 +1,10 @@
+log
+node_modules
+.editorconfig
+.vscode/
+*.log
+.env
+.env*
+.vs
+
+

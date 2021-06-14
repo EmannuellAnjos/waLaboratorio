@@ -1,0 +1,516 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Wa Project | Avaliação Técnica",
+    "description": "API para manutenção de laboratórios e exames.",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Exames",
+      "description": "Manage Exames operations"
+    }
+  ],
+  "paths": {
+    "lab/v1/exame": {
+      "post": {
+        "tags": [
+          "Exames"
+        ],
+        "summary": "Adicionar novo Exame",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Exame"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "idExame": {
+                          "type": "integer",
+                          "description": "Exame id"
+                        }
+                      }
+                    },
+                    {
+                      "required": [
+                        "idExame"
+                      ]
+                    },
+                    {
+                      "$ref": "#/components/schemas/Exame"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Generic500error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Exames"
+        ],
+        "summary": "Lista todos os Exames ativos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "properties": {
+                          "idExame": {
+                            "type": "integer",
+                            "description": "Id Exame"
+                          }
+                        }
+                      },
+                      {
+                        "required": [
+                          "idExame"
+                        ]
+                      },
+                      {
+                        "$ref": "#/components/schemas/Exame"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Generic500error"
+          }
+        }
+      }
+    },
+    "lab/v1/exame/{idExame}": {
+      "put": {
+        "tags": [
+          "Exames"
+        ],
+        "summary": "Alterar Dados do Exame",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idExame"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Exame"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Generic500error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Exames"
+        ],
+        "summary": "Deletar Exame pelo ID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idExame"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Generic400error"
+          }
+        }
+      }
+    },
+    "/lab/v1/exame/incluirLote": {
+      "post": {
+        "tags": [
+          "Exames"
+        ],
+        "summary": "Adiciona exame em lote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ExameIncluirAlterar"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "$ref": "#/components/schemas/Exame"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Generic500error"
+          }
+        }
+      }
+    },
+    "/lab/v1/exame/alterarLote": {
+      "post": {
+        "tags": [
+          "Exames"
+        ],
+        "summary": "Altera exame em lote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "idExame": {
+                          "type": "integer",
+                          "description": "Id. Exame"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/ExameIncluirAlterar"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "$ref": "#/components/schemas/Exame"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Generic500error"
+          }
+        }
+      }
+    },
+    "/lab/v1/exame/excluirLote": {
+      "post": {
+        "tags": [
+          "Exames"
+        ],
+        "summary": "Inativar exame em lote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "idExame": {
+                          "type": "integer",
+                          "description": "Id. Exame"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "$ref": "#/components/schemas/Exame"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Generic500error"
+          }
+        }
+      }
+    },
+    "/lab/v1/exame/buscaExame/{nmExame}": {}
+  },
+  "components": {
+    "responses": {
+      "Generic400error": {
+        "description": "Ocorreu um erro",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "description": "Error"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Descrição do erro"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Generic401error": {
+        "description": "Não autorizado",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "description": "Error"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Descrição do error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Generic500error": {
+        "description": "Ocorreu um erro interno",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "description": "Error"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Descrição do erro"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Limit": {
+        "in": "query",
+        "name": "limit",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Limit of lines to return"
+      },
+      "Offset": {
+        "in": "query",
+        "name": "offset",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Number of lines to skip before starting to return query lines"
+      },
+      "idExame": {
+        "in": "path",
+        "name": "idExame",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Id do Exame",
+        "required": true
+      }
+    },
+    "schemas": {
+      "Exame": {
+        "type": "object",
+        "properties": {
+          "nmExame": {
+            "type": "string",
+            "description": "Nome do Exame",
+            "maxLength": 250,
+            "example": "Hemograma"
+          },
+          "idExameTipo": {
+            "type": "integer",
+            "description": "Tipo do Exame",
+            "maxLength": 255,
+            "example": "[1 = analise clinica, 2 = imagem]"
+          }
+        },
+        "required": [
+          "nmExame",
+          "idExameTipo"
+        ]
+      },
+      "ExameIncluirAlterar": {
+        "type": "object",
+        "properties": {
+          "nmExame": {
+            "description": "Nome do Exame",
+            "type": "string",
+            "nullable": false,
+            "maxLength": 250
+          },
+          "idExameTipo": {
+            "description": "id. Exame Tipo",
+            "type": "integer",
+            "nullable": false
+          }
+        },
+        "required": [
+          "dsNome",
+          "idExameTipo",
+          "dsNomeExameTipo"
+        ]
+      }
+    }
+  }
+}
